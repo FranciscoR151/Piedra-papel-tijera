@@ -11,9 +11,9 @@ char nombre[20];
 char maquina[]={"DeepBlue2020"};
 string estado[200];
 string resultados[200];
-int perdidas = 0, ganes = 0, empates = 0;
-int perdidasM = 0, ganesM = 0, empatesM = 0;
-int perdidasJ = 0, ganesJ = 0, empatesj = 0;
+int perdidas = 0, ganes = 0, empates = 0,puntos=0;
+int perdidasM = 0, ganesM = 0, empatesM = 0,puntosM;
+int perdidasJ = 0, ganesJ = 0, empatesj = 0,PuntosJ;
 bool Inicio = false;
 
 void MenuPrincipal();
@@ -30,38 +30,36 @@ void JugadorVSmaquina(){
     int opcion = 0, contador = 0, x = 0;
     string elige[4] = {"Piedra", "Piedra", "Papel", "Tijera"};
     string partida[200];
-   
     cout << "Ingrese su nombre de usuario: "; cin>>nombre;
     system("cls");
-
     while (!Salir){
         contador++;
-
-        cout << nombre << "  "<< " Ganadas: " << ganes << "  Perdidas: " << perdidas << "  Empates: " << empates << endl;
+        cout << nombre << "  Puntos: "<<puntos<< " Ganadas: " << ganes << "  Perdidas: " << perdidas << "  Empates: " << empates << endl;
         cout<<endl;
-        cout << maquina << "  "<< " Ganadas: " << ganesM << "  Perdidas: " << perdidasM << "  Empates: " << empatesM << endl;
-
+        cout << maquina << "  Puntos: "<<puntosM<< " Ganadas: " << ganesM << "  Perdidas: " << perdidasM << "  Empates: " << empatesM << endl;
         cout << "\n\nIngrese (1) Piedra (2) Papel (3) Tijera (4) Salir" << endl;
         cout << "Eliga una opcion: ";
         cin >> opcion;
         system("cls");
-
         x = 1 + rand() % 3;
-
         switch (opcion){
             case 1:
                 if (x == 1){
                     empates++;
                     empatesM++;
+                    puntos++;
+                    puntosM++;
                     partida[contador] = "Empate";
                 }
                 else if (x == 2){
                     perdidas++;
+                    puntosM+=2;
                     ganesM++;
                     partida[contador] = "Perdiste";
                 }
                 else if (x == 3){
                     ganes++;
+                    puntos+=2;
                     perdidasM++;
                     partida[contador] = "Ganaste"; 
                 }
@@ -71,16 +69,20 @@ void JugadorVSmaquina(){
                 if (x == 1){
                     ganes++;
                     perdidasM++;
+                    puntos+=2;
                     partida[contador] = "Ganaste";
                 }
                 else if (x == 2){
                     empates++;
                     empatesM++;
+                    puntos++;
+                    puntosM++;
                     partida[contador] = "Empate";
                 }
                 else if(x==3){
                     perdidas++;
                     ganesM++;
+                     puntosM+=2;
                     partida[contador] = "Perdiste";
                 }
                 cout << partida[contador]<<"  Elegiste " << elige[opcion] << "  La maquina " << elige[x] << endl;
@@ -89,16 +91,20 @@ void JugadorVSmaquina(){
                 if (x == 1){
                     ganesM++;
                     perdidas++;
+                     puntosM+=2;
                     partida[contador] = "Perdiste";
                 }
                 else if (x == 2){
                     perdidasM++;
                     ganesM++;
+                    puntos+=2;
                     partida[contador] = "Ganaste";
                 }
                 else if(x==3){
                     empates++;
                     empatesM++;
+                    puntos++;
+                    puntosM++;
                     partida[contador] = "Empate";
                 }
                 cout << partida[contador]<<"  Elegiste " << elige[opcion] << "  DeepBlue2020 " << elige[x] << endl;
