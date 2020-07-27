@@ -1,156 +1,162 @@
-#include<iostream>
-#include<string.h>
-#include<stdlib.h>
-#include<time.h>
-#include<iomanip>
+#include <iostream>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+#include <iomanip>
+#include <string>
 using namespace std;
 
-int main(){
-    int desicion; //Guarda eleccion de si es pie, pap o tij
-    char nombre[20]; //Para guardar el nombre que ingrese
-    int aleatorios; // 1=piedra 2=papel 3=tijera
-    int x=0, x2=0; //para mantener el while
-    int opc, ptsMaquina=0, ptsJugador=0, ptsJugador2=0;
-    int empateJ1, empateM, empateJ2; //Aqui estarán los empates de cada usuario y maquina
-    int ganeJ1=0, ganeM=0, ganeJ2=0; //Las veces que ha ganado cada usuario
+//Variables globales
+char nombre[20];
+char maquina[]={"DeepBlue2020"};
+string estado[200];
+string resultados[200];
+int perdidas = 0, ganes = 0, empates = 0;
+int perdidasM = 0, ganesM = 0, empatesM = 0;
+int perdidasJ = 0, ganesJ = 0, empatesj = 0;
+bool Inicio = false;
 
-    while (x=0){
-        cout<<"(1) Partida vs Maquina  (2) Partida vs jugador2  (3) Historial del juego  (4) Cerrar"<<endl;
-        cin>>opc;
-        srand(time(NULL)); //ramdon
+void MenuPrincipal();
 
-        if(opc==1){
-            cout<<"Ingrese su nombre de ususario: ";
-                cin.getline(nombre, 20, '\n');
-            while(x2=0){
-            cout<<"Ingrese (1) Piedra (2) Papel (3) Tijera (4) Salir y guardar"<<endl;
-            cin>>desicion;
-            aleatorios=1+rand()%(3);
-            
-            switch (desicion){
-            case 1: 
-            cout<<"Has ingresado PIEDRA"<<endl;
-              if(aleatorios==1){
-                  cout<<"DeepBlue2020 ha ingresado PIEDRA"<<endl;
-                  cout<<"¡Empate!"<<endl;
-                  empateJ1++; //se aumenta el empate del jugador
-                  empateM++; //se aumenta el empate de la maquina
-                  ptsMaquina++; //se aumenta en 1 los puntos de la maquina
-                  ptsJugador++; //se aumenta en 1 los puntos del jugador
-                  cout<<setfill(' ');
-                  cout<<"Usuario"<<setw(5)<<"Pts"<<setw(5)<<"Empates"<<setw(5)<<"Ganes"<<endl;
-                  cout<<nombre<<setw(5)<<ptsJugador<<setw(5)<<empateJ1<<setw(5)<<ganeJ1<<endl;
-                  cout<<"DeepBlue2020"<<setw(5)<<ptsMaquina<<setw<<empateM<<setw(5)<<ganeM<<endl;
-              } 
-              else if(aleatorios==2){
-                  cout<<"DeepBlue2020 ha ingresado PAPEL"<<endl;
-                  cout<<"DeepBlue2020 gana"<<endl;
-                  ganeM++; //Se incrementa en 1 las veces que ha ganado maquina
-                  ptsMaquina=ptsMaquina+2; //Se incrementa en 2 ya que ha ganado
-                  cout<<setfill(' ');
-                  cout<<"Usuario"<<setw(5)<<"Pts"<<setw(5)<<"Empates"<<setw(5)<<"Ganes"<<endl;
-                  cout<<nombre<<setw(5)<<ptsJugador<<setw(5)<<empateJ1<<setw(5)<<ganeJ1<<endl;
-                  cout<<"DeepBlue2020"<<setw(5)<<ptsMaquina<<setw<<empateM<<setw(5)<<ganeM<<endl;
-              }
+void timer(int ms){
+    float tfinal;
+    tfinal= clock()+ms*1000;
+    while (clock()<tfinal) {}
+}
 
-              else if(aleatorios==3){
-                  cout<<"DeepBlue2020 ha ingresado TIJERA"<<endl;
-                  cout<<"Tu has ganado"<<endl;
-                  ganeJ1++; //Se incrementa en 1 las veces que ha ganado el usuario
-                  ptsJugador= ptsJugador+2; //Se incrementan los puntos en 2
-                  cout<<"Usuario"<<setw(5)<<"Pts"<<setw(5)<<"Empates"<<setw(5)<<"Ganes"<<endl;
-                  cout<<nombre<<setw(5)<<ptsJugador<<setw(5)<<empateJ1<<setw(5)<<ganeJ1<<endl;
-                  cout<<"DeepBlue2020"<<setw(5)<<ptsMaquina<<setw<<empateM<<setw(5)<<ganeM<<endl;
-              }
+void JugadorVSmaquina(){
+    bool Salir = false;
+    char guardar[1];
+    int opcion = 0, contador = 0, x = 0;
+    string elige[4] = {"Piedra", "Piedra", "Papel", "Tijera"};
+    string partida[200];
+   
+    cout << "Ingrese su nombre de usuario: "; cin>>nombre;
+    system("cls");
 
-              else{
-                  cout<<"Numero ingresado invalido"<<endl;
-              }
-              break; //Aqui se cierra cuando has ingresado PIEDRA
-            
+    while (!Salir){
+        contador++;
+
+        cout << nombre << "  "<< " Ganadas: " << ganes << "  Perdidas: " << perdidas << "  Empates: " << empates << endl;
+        cout<<endl;
+        cout << maquina << "  "<< " Ganadas: " << ganesM << "  Perdidas: " << perdidasM << "  Empates: " << empatesM << endl;
+
+        cout << "\n\nIngrese (1) Piedra (2) Papel (3) Tijera (4) Salir" << endl;
+        cout << "Eliga una opcion: ";
+        cin >> opcion;
+        system("cls");
+
+        x = 1 + rand() % 3;
+
+        switch (opcion){
+            case 1:
+                if (x == 1){
+                    empates++;
+                    empatesM++;
+                    partida[contador] = "Empate";
+                }
+                else if (x == 2){
+                    perdidas++;
+                    ganesM++;
+                    partida[contador] = "Perdiste";
+                }
+                else if (x == 3){
+                    ganes++;
+                    perdidasM++;
+                    partida[contador] = "Ganaste"; 
+                }
+                cout << partida[contador]<<"  Elegiste " << elige[opcion] << "  La maquina " << elige[x] << endl;
+                break;
             case 2:
-            cout<<"Has ingresado PAPEL"<<endl;
-              if(aleatorios==1){
-                  cout<<"DeepBlue2020 ha ingresado PIEDRA"<<endl;
-                  cout<<"Has ganado"<<endl;
-                  ganeJ1++;
-                  ptsJugador= ptsJugador+2;
-                  cout<<"Usuario"<<setw(5)<<"Pts"<<setw(5)<<"Empates"<<setw(5)<<"Ganes"<<endl;
-                  cout<<nombre<<setw(5)<<ptsJugador<<setw(5)<<empateJ1<<setw(5)<<ganeJ1<<endl;
-                  cout<<"DeepBlue2020"<<setw(5)<<ptsMaquina<<setw<<empateM<<setw(5)<<ganeM<<endl;
-              }
-              else if(aleatorios==2){
-                  cout<<"DeepBlue2020 ha ingresado PAPEL"<<endl;
-                  cout<<"¡Empate!"<<endl;
-                  empateJ1++;
-                  empateM++;
-                  ptsMaquina++;
-                  ptsJugador++;
-                  cout<<setfill(' ');
-                  cout<<"Usuario"<<setw(5)<<"Pts"<<setw(5)<<"Empates"<<setw(5)<<"Ganes"<<endl;
-                  cout<<nombre<<setw(5)<<ptsJugador<<setw(5)<<empateJ1<<setw(5)<<ganeJ1<<endl;
-                  cout<<"DeepBlue2020"<<setw(5)<<ptsMaquina<<setw<<empateM<<setw(5)<<ganeM<<endl;
-              }
-              else if(aleatorios==3){
-                  cout<<"DeepBlue2020 ha ingresado TIJERA"<<endl;
-                  cout<<"DeepBlue2020 gana"<<endl;
-                  ganeM++;
-                  ptsMaquina=ptsMaquina+2;
-                  cout<<setfill(' ');
-                  cout<<"Usuario"<<setw(5)<<"Pts"<<setw(5)<<"Empates"<<setw(5)<<"Ganes"<<endl;
-                  cout<<nombre<<setw(5)<<ptsJugador<<setw(5)<<empateJ1<<setw(5)<<ganeJ1<<endl;
-                  cout<<"DeepBlue2020"<<setw(5)<<ptsMaquina<<setw<<empateM<<setw(5)<<ganeM<<endl;
-              }
-
-              else{
-                  cout<<"Numero ingresado invalido"<<endl;
-              }
-              break;
-
-              case 3:
-              cout<<"Has ingresado TIJERA"<<endl;
-                if(aleatorios==1){
-                    cout<<"DeepBlue2020 ha ingresado PIEDRA"<<endl;
-                    cout<<"DeepBlue2020 gana"<<endl;
-                    ganeM++;
-                  ptsMaquina=ptsMaquina+2;
-                  cout<<setfill(' ');
-                  cout<<"Usuario"<<setw(5)<<"Pts"<<setw(5)<<"Empates"<<setw(5)<<"Ganes"<<endl;
-                  cout<<nombre<<setw(5)<<ptsJugador<<setw(5)<<empateJ1<<setw(5)<<ganeJ1<<endl;
-                  cout<<"DeepBlue2020"<<setw(5)<<ptsMaquina<<setw<<empateM<<setw(5)<<ganeM<<endl;
+                if (x == 1){
+                    ganes++;
+                    perdidasM++;
+                    partida[contador] = "Ganaste";
                 }
-                else if(aleatorios==2){
-                    cout<<"DeepBlue2020 ha ingresado PAPEL"<<endl;
-                    cout<<"Has ganado"<<endl;
-                    ganeJ1++;
-                  ptsJugador= ptsJugador+2;
-                  cout<<"Usuario"<<setw(5)<<"Pts"<<setw(5)<<"Empates"<<setw(5)<<"Ganes"<<endl;
-                  cout<<nombre<<setw(5)<<ptsJugador<<setw(5)<<empateJ1<<setw(5)<<ganeJ1<<endl;
-                  cout<<"DeepBlue2020"<<setw(5)<<ptsMaquina<<setw<<empateM<<setw(5)<<ganeM<<endl;
+                else if (x == 2){
+                    empates++;
+                    empatesM++;
+                    partida[contador] = "Empate";
                 }
-                else if(aleatorios==3){
-                    cout<<"DeepBlue2020 ha ingresado TIJERA"<<endl;
-                    cout<<"¡Empate!"<<endl;
-                    empateJ1++;
-                  empateM++;
-                  ptsMaquina++;
-                  ptsJugador++;
-                  cout<<setfill(' ');
-                  cout<<"Usuario"<<setw(5)<<"Pts"<<setw(5)<<"Empates"<<setw(5)<<"Ganes"<<endl;
-                  cout<<nombre<<setw(5)<<ptsJugador<<setw(5)<<empateJ1<<setw(5)<<ganeJ1<<endl;
-                  cout<<"DeepBlue2020"<<setw(5)<<ptsMaquina<<setw<<empateM<<setw(5)<<ganeM<<endl;
+                else if(x==3){
+                    perdidas++;
+                    ganesM++;
+                    partida[contador] = "Perdiste";
+                }
+                cout << partida[contador]<<"  Elegiste " << elige[opcion] << "  La maquina " << elige[x] << endl;
+                break;
+            case 3:
+                if (x == 1){
+                    ganesM++;
+                    perdidas++;
+                    partida[contador] = "Perdiste";
+                }
+                else if (x == 2){
+                    perdidasM++;
+                    ganesM++;
+                    partida[contador] = "Ganaste";
+                }
+                else if(x==3){
+                    empates++;
+                    empatesM++;
+                    partida[contador] = "Empate";
+                }
+                cout << partida[contador]<<"  Elegiste " << elige[opcion] << "  DeepBlue2020 " << elige[x] << endl;
+                break;
+            case 4:
+                cout << "Desea guardar los resultados S (si),N (no) >>";
+                cin >> guardar;
+                system("cls");
+                if (guardar[0] == 'S' || guardar[0] == 's'){
+                    cout<<"Guardando...";
+                    timer(1);
+                    cout<<"Los resultados seguradaron correctamente"<<endl;
+                    Salir = true;
+                    MenuPrincipal();
+                    resultados[contador] = elige[opcion];
+                    estado[contador] = partida[contador];
+                }
+                else{
+                    cout<<"Regresando al menu principal..."<<endl;
+                    timer(1);
+                    MenuPrincipal();
                 }
                 break;
+                default:
+                 cout<<"La opcion eligida no existe";
+                 timer(2);
+                 system("cls");
+                 contador--;
+                 break;
+}}}
 
-                default: x2=1; //Aqui se debe guardar los resultados de los datos anteriores
-                break;
-            }
+void JugadorVSjugador(){
+//Se hace lo mismo del jugador contra maguina
 
-            }
-            
-        }
-    }
+}
+void MenuPrincipal(){
+    int opc = 0;
+    system("cls");
+    while (!Inicio){
+    cout << "\n(1) Partida vs Maquina\n(2) Partida vs jugador2\n(3) Historial del juego\n(4) Cerrar" << endl;
+    cout << "\nCual opcion desea elegir:";
+    cin >> opc; //Se guarda la opcion elegida
+    system("cls");
+    switch (opc){
+    case 1:
+        JugadorVSmaquina();
+        break;
+    case 2:
+        JugadorVSjugador();
+    default: 
+     Inicio=true;
+     break;
+}}}
 
+int main(){
+    srand(time(NULL));
+        MenuPrincipal();
+    
     system("pause");
     return 0;
 }
