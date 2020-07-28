@@ -43,15 +43,18 @@ struct HMaquina_jugador{
 void MenuPrincipal();
 
 void mostrarPuntos(bool modo){
+    cout<<setfill(' ');
 
     if (modo==false){
-      cout << jugador[1].nombre << "  Puntos: "<<puntos<< " Ganadas: " << ganes << "  Perdidas: " << perdidas << "  Empates: " << empates << endl;
+      cout<<"Nombre "<<setw(5)<<" Puntos"<<setw(5)<<" Ganes"<<setw(5)<<" Perdidas"<<setw(5)<<" Empates"<<endl;
+      cout << jugador[1].nombre<<setw(5)<<puntos<<setw(5)<<ganes<<setw(5)<< perdidas<<setw(5)<< empates << endl;
       cout<<endl;
-      cout << jugador[Njugadores].nombre << "  Puntos: "<<puntosJ<< " Ganadas: " << ganesM << "  Perdidas: " << perdidasM << "  Empates: " << empatesM << endl;
+      cout << jugador[Njugadores].nombre<<setw(5)<<puntosJ<<setw(5)<< ganesM<<setw(5)<< perdidasM<<setw(5)<< empatesM << endl;
     }else{
-        cout << historial[Npersonas].nombre << "  Puntos: "<<puntos<< " Ganadas: " << ganes << "  Perdidas: " << perdidas << "  Empates: " << empates << endl;
+        cout<<"Nombre "<<setw(5)<<" Puntos"<<setw(5)<<" Ganes"<<setw(5)<<" Perdidas"<<setw(5)<<" Empates"<<endl;
+        cout << historial[Npersonas].nombre<<setw(5)<<puntos<<setw(5)<< ganes<<setw(5)<< perdidas<<setw(5)<< empates << endl;
         cout<<endl;
-        cout << historial[1].nombre << "  Puntos: "<<puntosM<< " Ganadas: " << ganesM << "  Perdidas: " << perdidasM << "  Empates: " << empatesM << endl;
+        cout << historial[1].nombre<<setw(5)<<puntosM<<setw(5)<< ganesM<<setw(5)<< perdidasM<<setw(5)<< empatesM << endl;
     }  
 }
 
