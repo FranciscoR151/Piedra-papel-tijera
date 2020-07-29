@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#include <iomanip>
 using namespace std;
 //Variables globales y arreglos
 int perdidas = 0, ganes = 0, empates = 0,puntos=0, perdidasM = 0, ganesM = 0, empatesM = 0,puntosM=0,Njugadores=0,Nmaquinas=0;
