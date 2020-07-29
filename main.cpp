@@ -341,7 +341,7 @@ int main(){
     case 2: JugadorVSjugador(); break;
     case 3: Historial();
     case 4: Inicio=true; break;
-    default: cout<<" Opcion no existe:\n"; break;
+    default: cout<<"La Opcion no existe:\n"; break;
 
 }}
     getch();
